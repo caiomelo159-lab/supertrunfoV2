@@ -1,0 +1,134 @@
+#include <stdio.h>
+#include <string.h>
+
+// Estrutura da carta
+struct Carta {
+    char estado;                
+    char codigo[4];             
+    char nomeCidade[50];        
+    int populacao;              
+    float area;                 
+    double pib;                 
+    int numPontosTuristicos;    
+    float densidadePopulacional;
+    double pibPerCapita;
+    float superPoder;
+};
+
+// Função para exibir cartas
+void exibirCarta(struct Carta c) {
+    printf("\nCarta:\n Estado: %c\n Código: %s\n Cidade: %s\n População: %d\n Área: %.2f km²\n PIB: %.2lf\n Pontos Turísticos: %d\n Densidade Populacional: %.2f\n PIB per Capita: %.2lf\n SuperPoder: %.2lf\n",
+        c.estado, c.codigo, c.nomeCidade, c.populacao, c.area, c.pib, c.numPontosTuristicos, c.densidadePopulacional, c.pibPerCapita, c.superPoder);
+}
+
+// Função de comparação interativa
+void compararPorAtributo(struct Carta c1, struct Carta c2, int opcao) {
+    printf("\n=== Comparação ===\n");
+    switch(opcao) {
+        case 1: // População
+            printf("Atributo: População\n%s: %d\n%s: %d\n",
+                   c1.nomeCidade, c1.populacao, c2.nomeCidade, c2.populacao);
+            if(c1.populacao > c2.populacao) printf("Vencedor: %s\n", c1.nomeCidade);
+            else if(c2.populacao > c1.populacao) printf("Vencedor: %s\n", c2.nomeCidade);
+            else printf("Empate!\n");
+            break;
+
+        case 2: // Área
+            printf("Atributo: Área\n%s: %.2f km²\n%s: %.2f km²\n",
+                   c1.nomeCidade, c1.area, c2.nomeCidade, c2.area);
+            if(c1.area > c2.area) printf("Vencedor: %s\n", c1.nomeCidade);
+            else if(c2.area > c1.area) printf("Vencedor: %s\n", c2.nomeCidade);
+            else printf("Empate!\n");
+            break;
+
+        case 3: // PIB
+            printf("Atributo: PIB\n%s: %.2lf\n%s: %.2lf\n",
+                   c1.nomeCidade, c1.pib, c2.nomeCidade, c2.pib);
+            if(c1.pib > c2.pib) printf("Vencedor: %s\n", c1.nomeCidade);
+            else if(c2.pib > c1.pib) printf("Vencedor: %s\n", c2.nomeCidade);
+            else printf("Empate!\n");
+            break;
+
+        case 4: // PIB per Capita
+            printf("Atributo: PIB per Capita\n%s: %.2lf\n%s: %.2lf\n",
+                   c1.nomeCidade, c1.pibPerCapita, c2.nomeCidade, c2.pibPerCapita);
+            if(c1.pibPerCapita > c2.pibPerCapita) printf("Vencedor: %s\n", c1.nomeCidade);
+            else if(c2.pibPerCapita > c1.pibPerCapita) printf("Vencedor: %s\n", c2.nomeCidade);
+            else printf("Empate!\n");
+            break;
+
+        case 5: // Densidade Populacional (menor vence)
+            printf("Atributo: Densidade Populacional\n%s: %.2f\n%s: %.2f\n",
+                   c1.nomeCidade, c1.densidadePopulacional, c2.nomeCidade, c2.densidadePopulacional);
+            if(c1.densidadePopulacional < c2.densidadePopulacional) printf("Vencedor: %s\n", c1.nomeCidade);
+            else if(c2.densidadePopulacional < c1.densidadePopulacional) printf("Vencedor: %s\n", c2.nomeCidade);
+            else printf("Empate!\n");
+            break;
+
+        case 6: // Super Poder
+            printf("Atributo: Super Poder\n%s: %.2lf\n%s: %.2lf\n",
+                   c1.nomeCidade, c1.superPoder, c2.nomeCidade, c2.superPoder);
+            if(c1.superPoder > c2.superPoder) printf("Vencedor: %s\n", c1.nomeCidade);
+            else if(c2.superPoder > c1.superPoder) printf("Vencedor: %s\n", c2.nomeCidade);
+            else printf("Empate!\n");
+            break;
+
+        default:
+            printf("Opção inválida!\n");
+    }
+}
+
+int main() {
+    struct Carta carta1, carta2;
+
+    printf("=== Cadastro de Cartas Super Trunfo (Cidades) ===\n");
+    printf("===== ATENÇÃO: NÃO USAR CARACTERES ESPECIAIS OU ACENTOS =====\n");
+
+    // Cadastro da primeira carta
+    printf("\n--- Primeira Carta ---\n");
+    printf("Estado (A-H): "); scanf(" %c", &carta1.estado);
+    printf("Código da Carta (ex: A01): "); scanf("%s", carta1.codigo);
+    getchar();
+    printf("Nome da Cidade: "); fgets(carta1.nomeCidade, sizeof(carta1.nomeCidade), stdin);
+    carta1.nomeCidade[strcspn(carta1.nomeCidade, "\n")] = 0;
+    printf("População: "); scanf("%d", &carta1.populacao);
+    printf("Área (km²): "); scanf("%f", &carta1.area);
+    printf("PIB (em bilhões): "); scanf("%lf", &carta1.pib);
+    printf("Número de Pontos Turísticos: "); scanf("%d", &carta1.numPontosTuristicos);
+
+    // Cadastro da segunda carta
+    printf("\n--- Segunda Carta ---\n");
+    printf("Estado (A-H): "); scanf(" %c", &carta2.estado);
+    printf("Código da Carta (ex: B02): "); scanf("%s", carta2.codigo);
+    getchar();
+    printf("Nome da Cidade: "); fgets(carta2.nomeCidade, sizeof(carta2.nomeCidade), stdin);
+    carta2.nomeCidade[strcspn(carta2.nomeCidade, "\n")] = 0;
+    printf("População: "); scanf("%d", &carta2.populacao);
+    printf("Área (km²): "); scanf("%f", &carta2.area);
+    printf("PIB (em bilhões): "); scanf("%lf", &carta2.pib);
+    printf("Número de Pontos Turísticos: "); scanf("%d", &carta2.numPontosTuristicos);
+
+    // Calculando métricas
+    carta1.pib *= 1000000000.0;
+    carta2.pib *= 1000000000.0;
+    carta1.densidadePopulacional = carta1.populacao / carta1.area;
+    carta2.densidadePopulacional = carta2.populacao / carta2.area;
+    carta1.pibPerCapita = carta1.pib / carta1.populacao;
+    carta2.pibPerCapita = carta2.pib / carta2.populacao;
+    carta1.superPoder = carta1.populacao + carta1.area + carta1.pib + carta1.numPontosTuristicos + carta1.pibPerCapita + (1.0 / carta1.densidadePopulacional);
+    carta2.superPoder = carta2.populacao + carta2.area + carta2.pib + carta2.numPontosTuristicos + carta2.pibPerCapita + (1.0 / carta2.densidadePopulacional);
+
+    // Exibir cartas
+    exibirCarta(carta1);
+    exibirCarta(carta2);
+
+    // Menu interativo
+    int escolha;
+    printf("\nEscolha o atributo para comparar:\n");
+    printf("1 - População\n2 - Área\n3 - PIB\n4 - PIB per Capita\n5 - Densidade Populacional\n6 - Super Poder\n");
+    printf("Opção: "); scanf("%d", &escolha);
+
+    compararPorAtributo(carta1, carta2, escolha);
+
+    return 0;
+}
